@@ -25,4 +25,7 @@ envs/curobo/*
 /config.json
 
 /*.json*
-/*.txt
+/*.txtassets/
+data/
+outputs/
+
