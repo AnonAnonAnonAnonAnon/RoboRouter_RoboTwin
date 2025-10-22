@@ -16,6 +16,7 @@
     https://mcneznd3g628.feishu.cn/wiki/YZwTwwZZPi5Oiek18aocHVLQnTf
 
 - [ ] **(2) Implement the minimal runnable method router** according to the system design (TBD)
+  - The minimal agent call demo has now been implemented, including a retriever and a router, in agents/ma_router_retriever_min_gpt_demo.py
 - [ ] others……
 
 ---
@@ -53,6 +54,7 @@
 ## Notes
 
 - Feel free to write ideas or progress about implement directly here. This page also serves as a memo & message board.  
+
 
 
 
