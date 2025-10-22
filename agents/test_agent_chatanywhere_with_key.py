@@ -1,3 +1,5 @@
+#成功运行
+
 # /home/cyt/RoboRouter/RoboRouter_RoboTwin/agents/ca_agent_standalone.py
 import sys
 from openai import AsyncOpenAI
