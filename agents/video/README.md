@@ -7,3 +7,5 @@ video文件夹这里，放用于测试 evaluation agent 的一些示例视频
 文件夹video中的视频，是群友求助发的，dp3 w/o rgb在beat_block_hammer任务上的执行，成功率40%
 
 文件夹2025-10-25 21:19:30中的视频，是ctx发的，dp3在beat_block_hammer任务上的执行，成功率70%
+
+文件夹fail_exec_video是从文件夹2025-10-25 21:19:30整理的失败视频，每种失败类型一个视频
