@@ -1,0 +1,7 @@
+func_test文件夹，用于测试openai agent sdk的一些功能
+
+由于付费渠道问题，放弃使用openai原生的api服务，转而使用chatanywhere的api服务
+
+使用chatanywhere的api服务，大部分openai agent sdk的功能都可以使用
+
+但是有一些功能不能使用，例如不能使用openai网页的tracing功能
