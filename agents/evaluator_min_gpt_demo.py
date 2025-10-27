@@ -1,15 +1,13 @@
-# 试图实现：输入视频，是否成功，任务描述；提取几帧；提交给gpt；输出情况分析，例如如何失败
-
-# 未能成功实现
-
 # -*- coding: utf-8 -*-
 """
 Minimal video anomaly detector with OpenAI Agents SDK
+- Input : a robot-operation video file
+- Steps : sample first / last / N middle frames -> send as multimodal input
+- Output: JSON { verdict, summary, key_frames, confidence }
 
+Usage:
+  python video_anomaly_minimal.py /path/to/video.mp4 --num-mid 4 --task beat_block_hammer
 """
-
-import os
-from pathlib import Path
 
 from urllib.parse import urlparse, quote
 
@@ -97,69 +95,28 @@ def sample_frames(video_path: str, num_mid_frames: int = 4) -> List[Tuple[int, b
 # ---------------------------------------
 # 3) 构造多模态输入项（文本 + 多图）
 # ---------------------------------------
-import time
-
-
-def save_frames_to_dir(frames: List[Tuple[int, bytes]], outdir: str) -> List[Tuple[int, str]]:
-    """
-    把采样帧保存到 outdir，文件名固定 f_{idx}.jpg
-    返回 [(idx, local_path), ...]
-    """
-    d = Path(outdir)
-    d.mkdir(parents=True, exist_ok=True)
-    results: List[Tuple[int, str]] = []
-    for idx, jpg in frames:
-        p = d / f"f_{idx}.jpg"
-        with open(p, "wb") as f:
-            f.write(jpg)
-        print(f"[export] saved -> {p}")
-        results.append((idx, str(p)))
-    return results
-
-def make_urls_from_base(task: str, indices: List[int], base_url: str) -> list:
-    """
-    用 base_url 拼出直链：{base_url}/f_{idx}.jpg
-    返回给 make_input_items_from_urls 的 [(idx, url), ...]
-    """
-    base = base_url.rstrip("/")
-    urls = [(idx, f"{base}/f_{idx}.jpg") for idx in indices]
-    return urls
-
 def upload_frames_get_urls(frames: List[Tuple[int, bytes]]) -> List[Tuple[int, str]]:
     """
-    仅使用 catbox 永久上传，返回 [(frame_index, https://files.catbox.moe/xxxx.jpg), ...]
-    加 3 次重试，避免偶发断连。
+    只用 litterbox.catbox.moe 上传，返回 [(frame_index, url), ...]
+    time 可选: "1h" / "12h" / "24h"
     """
     ua = {"User-Agent": "curl/8.5.0", "Accept": "*/*"}
     urls: List[Tuple[int, str]] = []
-
     for idx, jpg in frames:
-        last_err = None
-        for attempt in range(1, 4):
-            try:
-                r = requests.post(
-                    "https://catbox.moe/user/api.php",
-                    data={"reqtype": "fileupload"},
-                    files={"fileToUpload": (f"f_{idx}.jpg", jpg, "image/jpeg")},
-                    headers=ua, timeout=30
-                )
-                r.raise_for_status()
-                url = r.text.strip()
-                if url.startswith("https://files.catbox.moe/"):
-                    print(f"[debug] frame {idx} -> {url}")
-                    urls.append((idx, url))
-                    break
-                else:
-                    raise RuntimeError(f"catbox unexpected resp: {r.text[:200]}")
-            except Exception as e:
-                last_err = e
-                print(f"[warn] catbox upload idx={idx} attempt={attempt} -> {e}")
-                time.sleep(1.5)
-        else:
-            # 3 次都失败
-            raise RuntimeError(f"catbox upload failed for frame {idx}: {last_err}")
+        files = {"fileToUpload": (f"f_{idx}.jpg", jpg, "image/jpeg")}
+        data  = {"reqtype": "fileupload", "time": "12h"}
+        r = requests.post(
+            "https://litterbox.catbox.moe/resources/internals/api.php",
+            files=files, data=data, headers=ua, timeout=30
+        )
+        if not r.ok:
+            raise RuntimeError(f"litterbox {r.status_code}: {r.text[:200]}")
+        url = r.text.strip()
+        if not (url.startswith("http://") or url.startswith("https://")):
+            raise RuntimeError(f"litterbox unexpected response: {r.text[:200]}")
+        print(f"[debug] frame {idx} -> {url}")
+        urls.append((idx, url))
     return urls
-
 
 
 def _proxy_image(raw_url: str) -> str:
@@ -226,48 +183,21 @@ analyzer = Agent(
 # ---------------------------------------
 # 5) CLI / main
 # ---------------------------------------
-async def run_once(video_path: str, num_mid: int, task: str,
-                   use_proxy: bool, debug_url: str | None,
-                   export_dir: str | None, base_url: str | None,
-                   skip_analyze: bool):
-
+async def run_once(video_path: str, num_mid: int, task: str, use_proxy: bool, debug_url: str | None):
     if debug_url:
+        # 跳过采样+上传，直接用一个已知 URL 验证服务端可拉取
         urls = [(0, debug_url)]
         input_items = make_input_items_from_urls(task, urls, use_proxy=use_proxy)
         print(f"[info] debug-url mode: use_proxy={use_proxy}")
-        result = await Runner.run(analyzer, input_items, max_turns=1)
-        output: AnomalyResult = result.final_output
-        print(json.dumps(output.model_dump(), ensure_ascii=False, indent=2))
-        return
-
-    # 正常路径：采样
-    frames = sample_frames(video_path, num_mid_frames=num_mid)
-    sampled_indices = [idx for idx, _ in frames]
-    print(f"[info] sampled frame indices: {sampled_indices}")
-
-    # 如果给了 base_url，则本地导出 -> 你自己 push -> 用 base_url 直链
-    if base_url:
-        if not export_dir:
-            export_dir = "./frames_to_push"
-        save_frames_to_dir(frames, export_dir)
-        urls = make_urls_from_base(task, sampled_indices, base_url)
-        for i, u in urls:
-            print(f"[url] frame {i} -> {u}")
-        if skip_analyze:
-            print("[info] skip_analyze=True, 仅导出并打印直链。请把上述文件 push 到对应路径后再运行分析。")
-            return
-        # 继续做探针 + 分析（注意：若你还没 push，此处会 404）
+    else:
+        frames = sample_frames(video_path, num_mid_frames=num_mid)
+        urls = upload_frames_get_urls(frames)
         input_items = make_input_items_from_urls(task, urls, use_proxy=use_proxy)
-        result = await Runner.run(analyzer, input_items, max_turns=1)
-        output: AnomalyResult = result.final_output
-        print(json.dumps(output.model_dump(), ensure_ascii=False, indent=2))
-        return
+        sampled_indices = [idx for idx, _ in frames]
+        print(f"[info] sampled frame indices: {sampled_indices}")
+        for i, u in urls:
+            print(f"[debug] frame {i} -> {u}")
 
-    # 否则，走原有上传（不推荐，因为你这边经常失败）
-    urls = upload_frames_get_urls(frames)
-    for i, u in urls:
-        print(f"[debug] frame {i} -> {u}")
-    input_items = make_input_items_from_urls(task, urls, use_proxy=use_proxy)
     result = await Runner.run(analyzer, input_items, max_turns=1)
     output: AnomalyResult = result.final_output
     print(json.dumps(output.model_dump(), ensure_ascii=False, indent=2))
@@ -291,25 +221,10 @@ def main():
 
     parser.add_argument("--no-proxy", dest="no_proxy", action="store_true", help="Do not proxy image URLs via wsrv")
 
-    parser.add_argument("--export-dir", type=str, default=None,
-                    help="导出采样帧到该目录（文件名 f_{idx}.jpg）")
-
-    parser.add_argument("--base-url", type=str, default=None,
-                        help="直链基础 URL，例如：https://raw.githubusercontent.com/<owner>/<repo>/<branch>/path/to/frames")
-
-    parser.add_argument("--skip-analyze", action="store_true",
-                        help="仅导出并打印直链，不发起分析（用于先 push 再跑分析）")
-
-
     args = parser.parse_args()
 
     try:
-        asyncio.run(run_once(
-            args.video, args.num_mid, args.task,
-            use_proxy=(not args.no_proxy), debug_url=args.debug_url,
-            export_dir=args.export_dir, base_url=args.base_url,
-            skip_analyze=args.skip_analyze
-        ))
+        asyncio.run(run_once(args.video, args.num_mid, args.task, use_proxy=(not args.no_proxy), debug_url=args.debug_url))
     except KeyboardInterrupt:
         print("\n[warn] interrupted by user.", file=sys.stderr)
     except Exception as e:

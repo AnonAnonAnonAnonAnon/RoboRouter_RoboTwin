@@ -8,4 +8,5 @@ RoboRouter_RoboTwin/agents/evaluator_min_gpt_demo.py 试图实现：输入视频
 但是未能成功实现，主要问题是chatanywhere的服务在接收图片上传方面似乎有问题
 ChatAnyWhere 网关对 data:、file_id 不可用，对多家外链域抓取失败或被限制（invalid_image_url）；加代理也并未彻底绕过
 
+frames_to_push文件夹中是从一个视频提取好的几个关键帧
 
