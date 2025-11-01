@@ -2,9 +2,9 @@ RoboRouter_RoboTwin/agents文件夹，放agent相关的部分实现
 
 整体上，RoboRouter基于RoboTwin，构建一些agent进行实现
 
-RoboRouter_RoboTwin/agents/ma_router_retriever_min_gpt_demo.py 成功实现agents的调用
+两个func_test文件夹中是比较基础的功能的测试文件
 
-RoboRouter_RoboTwin/agents/evaluator_min_demo_doubao.py 成功实现evaluator的demo
+agents_demo文件夹中是几个agent的跑通demo
 
 frames_to_push文件夹中是从一个视频提取好的几个关键帧
 
