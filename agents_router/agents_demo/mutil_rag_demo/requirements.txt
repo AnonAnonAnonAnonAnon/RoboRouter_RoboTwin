@@ -1,0 +1,22 @@
+# 多模态RAG检索系统依赖
+
+# 向量数据库
+qdrant-client>=1.7.0
+
+# Embedding模型
+voyageai>=0.2.0          # Voyage AI多模态embedding (推荐)
+# jina>=3.0.0            # 可选：Jina AI embedding
+
+# OpenAI & Agents SDK (用于ma_router_retriever_multimodal_qdrant.py)
+openai>=1.0.0
+openai-agents>=0.1.0     # OpenAI Agents SDK
+
+# 基础依赖
+requests>=2.31.0
+numpy>=1.24.0
+pillow>=10.0.0           # 图片处理
+
+# 可选：本地CLIP模型
+# transformers>=4.30.0
+# torch>=2.0.0
+
