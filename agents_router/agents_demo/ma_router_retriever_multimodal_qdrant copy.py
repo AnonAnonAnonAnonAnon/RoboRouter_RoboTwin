@@ -33,7 +33,9 @@ from mutil_rag_demo.vector_db import VectorDB
 from mutil_rag_demo.rag_retriever import MultimodalEmbedding, RAGRetriever
 
 # 导入机器人任务记录数据
-from robot_records_data_read_from_txt_keep_format import RECORDS
+# from robot_records_data import RECORDS
+from robot_records_data_read_from_txt import RECORDS
+
 
 # ===== ① 配置区 =====
 # OpenAI API配置

@@ -1,0 +1,11 @@
+{
+  "instruction": "Beat the block after grabbing the hammer.",
+  "model": "dp_beat_block_hammer",
+  "video_metadata": {
+    "obj": ["hammer", "block"],
+    "success": false,
+    "exec_time_s": 40,
+    "check_actors_contact": false
+  },
+  "vqa_summary": "Failure: gripper knocked the hammer over."
+}

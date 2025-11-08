@@ -6,11 +6,44 @@
 
 ### 快速开始
 
+#### 0 下载docker
+sudo apt-get update
+sudo apt-get install -y docker.io
+sudo systemctl enable --now docker
+sudo usermod -aG docker $USER
+newgrp docker
+docker version
+
+#### 0.5 配置 Docker Hub 加速器
+# 1) 配置 Docker Hub 加速器
+sudo mkdir -p /etc/docker
+cat <<'JSON' | sudo tee /etc/docker/daemon.json
+{
+  "registry-mirrors": [
+    "https://docker.m.daocloud.io",
+    "https://hub-mirror.c.163.com",
+    "https://docker.nju.edu.cn"
+  ],
+  "max-concurrent-downloads": 1
+}
+JSON
+
+# 2) 重载并重启 Docker，确认生效
+sudo systemctl daemon-reload
+sudo systemctl restart docker
+docker info | grep -A3 "Registry Mirrors"
+
+# 3) 预拉取（用 IPv4，降低超时概率），然后再启动脚本
+docker pull --ipv4 qdrant/qdrant:v1.15.5
+bash ./00start_qdrant.sh
+
+
 #### 1. 启动 Qdrant 数据库
 
 ```bash
 cd mutil_rag_demo
 ./00start_qdrant.sh
+bash ./00start_qdrant.sh
 ```
 
 #### 2. 安装依赖
@@ -28,6 +61,12 @@ pip install -r requirements.txt
 python ma_router_retriever_multimodal_qdrant.py \
   --query "根据当前场景推荐checkpoint" \
   --image "path/to/image.jpg"
+
+python ma_router_retriever_multimodal_qdrant.py \
+  --query "根据当前场景推荐checkpoint" \
+  --image "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/frames_to_push/f_0.jpg"
+
+
 
 # 运行测试
 python ma_router_retriever_multimodal_qdrant.py

@@ -1,0 +1,5 @@
+Adjust Bottle（Easy）: RDT 81%, Pi0 90%, ACT 97%, DP 97%, DP3 99%
+Beat Block Hammer（Easy）: RDT 77%, Pi0 43%, ACT 56%, DP 42%, DP3 72%
+Click Alarmclock（Easy）: RDT 61%, Pi0 63%, ACT 32%, DP 61%, DP3 77%
+Open Laptop（Easy）: RDT 59%, Pi0 85%, ACT 56%, DP 49%, DP3 82%
+Place Container Plate（Easy）: RDT 78%, Pi0 88%, ACT 72%, DP 41%, DP3 86%

@@ -1,0 +1,11 @@
+{
+  "instruction": "Beat the block after grabbing the hammer.",
+  "model": "rdt_beat_block_hammer",
+  "video_metadata": {
+    "obj": ["hammer", "block"],
+    "success": true,
+    "exec_time_s": 4,
+    "check_actors_contact": true
+  },
+  "vqa_summary": "Success: hammer beat the block."
+}
