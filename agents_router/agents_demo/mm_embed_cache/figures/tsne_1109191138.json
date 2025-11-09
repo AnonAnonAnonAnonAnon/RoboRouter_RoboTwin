@@ -1,0 +1,20 @@
+{
+  "timestamp": "1109191138",
+  "inputs_dir": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/embeddings",
+  "figure": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/figures/tsne_1109191138.png",
+  "coords_csv": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/figures/tsne_1109191138.csv",
+  "N": 5,
+  "D": 1024,
+  "use_pca": true,
+  "pca_dim": 5,
+  "tsne": {
+    "perplexity": 2,
+    "n_iter": 1000,
+    "learning_rate": "auto",
+    "early_exaggeration": 12.0,
+    "random_state": 42,
+    "metric": "euclidean+L2norm"
+  },
+  "color_by": "task",
+  "marker_by": null
+}

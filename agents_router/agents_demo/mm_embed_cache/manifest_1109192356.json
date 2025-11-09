@@ -1,0 +1,234 @@
+{
+  "batch_timestamp": "1109192356",
+  "model": "voyage-multimodal-3",
+  "backend": "voyage",
+  "embedding_dim": 1024,
+  "video_per_task": 5,
+  "items": [
+    {
+      "task": "adjust_bottle",
+      "episode": "episode0",
+      "instruction": "Adjust the bottle alignment.",
+      "video_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/video_test/from_dataset/adjust_bottle/episode0.mp4",
+      "frame_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/frames/adjust_bottle_episode0_1109192356.jpg",
+      "embedding_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/embeddings/mm_embed_adjust_bottle_episode0_1109192356.json",
+      "l2_norm": 1.0014973710344726
+    },
+    {
+      "task": "adjust_bottle",
+      "episode": "episode1",
+      "instruction": "Adjust the bottle alignment.",
+      "video_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/video_test/from_dataset/adjust_bottle/episode1.mp4",
+      "frame_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/frames/adjust_bottle_episode1_1109192356.jpg",
+      "embedding_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/embeddings/mm_embed_adjust_bottle_episode1_1109192356.json",
+      "l2_norm": 1.0022050726931684
+    },
+    {
+      "task": "adjust_bottle",
+      "episode": "episode10",
+      "instruction": "Adjust the bottle alignment.",
+      "video_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/video_test/from_dataset/adjust_bottle/episode10.mp4",
+      "frame_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/frames/adjust_bottle_episode10_1109192356.jpg",
+      "embedding_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/embeddings/mm_embed_adjust_bottle_episode10_1109192356.json",
+      "l2_norm": 0.9974772668182028
+    },
+    {
+      "task": "adjust_bottle",
+      "episode": "episode11",
+      "instruction": "Adjust the bottle alignment.",
+      "video_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/video_test/from_dataset/adjust_bottle/episode11.mp4",
+      "frame_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/frames/adjust_bottle_episode11_1109192356.jpg",
+      "embedding_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/embeddings/mm_embed_adjust_bottle_episode11_1109192356.json",
+      "l2_norm": 0.9982539112081923
+    },
+    {
+      "task": "adjust_bottle",
+      "episode": "episode12",
+      "instruction": "Adjust the bottle alignment.",
+      "video_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/video_test/from_dataset/adjust_bottle/episode12.mp4",
+      "frame_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/frames/adjust_bottle_episode12_1109192356.jpg",
+      "embedding_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/embeddings/mm_embed_adjust_bottle_episode12_1109192356.json",
+      "l2_norm": 0.9989586501479572
+    },
+    {
+      "task": "beat_block_hammer",
+      "episode": "episode0",
+      "instruction": "Beat the block after grabbing the hammer.",
+      "video_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/video_test/from_dataset/beat_block_hammer/episode0.mp4",
+      "frame_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/frames/beat_block_hammer_episode0_1109192356.jpg",
+      "embedding_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/embeddings/mm_embed_beat_block_hammer_episode0_1109192356.json",
+      "l2_norm": 0.9982087114647058
+    },
+    {
+      "task": "beat_block_hammer",
+      "episode": "episode1",
+      "instruction": "Beat the block after grabbing the hammer.",
+      "video_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/video_test/from_dataset/beat_block_hammer/episode1.mp4",
+      "frame_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/frames/beat_block_hammer_episode1_1109192356.jpg",
+      "embedding_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/embeddings/mm_embed_beat_block_hammer_episode1_1109192356.json",
+      "l2_norm": 1.0017757017695785
+    },
+    {
+      "task": "beat_block_hammer",
+      "episode": "episode10",
+      "instruction": "Beat the block after grabbing the hammer.",
+      "video_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/video_test/from_dataset/beat_block_hammer/episode10.mp4",
+      "frame_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/frames/beat_block_hammer_episode10_1109192356.jpg",
+      "embedding_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/embeddings/mm_embed_beat_block_hammer_episode10_1109192356.json",
+      "l2_norm": 1.0001277754585458
+    },
+    {
+      "task": "beat_block_hammer",
+      "episode": "episode11",
+      "instruction": "Beat the block after grabbing the hammer.",
+      "video_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/video_test/from_dataset/beat_block_hammer/episode11.mp4",
+      "frame_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/frames/beat_block_hammer_episode11_1109192356.jpg",
+      "embedding_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/embeddings/mm_embed_beat_block_hammer_episode11_1109192356.json",
+      "l2_norm": 1.0016036185972284
+    },
+    {
+      "task": "beat_block_hammer",
+      "episode": "episode12",
+      "instruction": "Beat the block after grabbing the hammer.",
+      "video_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/video_test/from_dataset/beat_block_hammer/episode12.mp4",
+      "frame_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/frames/beat_block_hammer_episode12_1109192356.jpg",
+      "embedding_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/embeddings/mm_embed_beat_block_hammer_episode12_1109192356.json",
+      "l2_norm": 1.0024173717182883
+    },
+    {
+      "task": "click_alarmclock",
+      "episode": "episode0",
+      "instruction": "Click the alarm clock button.",
+      "video_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/video_test/from_dataset/click_alarmclock/episode0.mp4",
+      "frame_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/frames/click_alarmclock_episode0_1109192356.jpg",
+      "embedding_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/embeddings/mm_embed_click_alarmclock_episode0_1109192356.json",
+      "l2_norm": 1.0014959569025335
+    },
+    {
+      "task": "click_alarmclock",
+      "episode": "episode1",
+      "instruction": "Click the alarm clock button.",
+      "video_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/video_test/from_dataset/click_alarmclock/episode1.mp4",
+      "frame_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/frames/click_alarmclock_episode1_1109192356.jpg",
+      "embedding_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/embeddings/mm_embed_click_alarmclock_episode1_1109192356.json",
+      "l2_norm": 0.9995576975170051
+    },
+    {
+      "task": "click_alarmclock",
+      "episode": "episode10",
+      "instruction": "Click the alarm clock button.",
+      "video_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/video_test/from_dataset/click_alarmclock/episode10.mp4",
+      "frame_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/frames/click_alarmclock_episode10_1109192356.jpg",
+      "embedding_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/embeddings/mm_embed_click_alarmclock_episode10_1109192356.json",
+      "l2_norm": 1.0005684741693832
+    },
+    {
+      "task": "click_alarmclock",
+      "episode": "episode11",
+      "instruction": "Click the alarm clock button.",
+      "video_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/video_test/from_dataset/click_alarmclock/episode11.mp4",
+      "frame_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/frames/click_alarmclock_episode11_1109192356.jpg",
+      "embedding_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/embeddings/mm_embed_click_alarmclock_episode11_1109192356.json",
+      "l2_norm": 0.9991583227691965
+    },
+    {
+      "task": "click_alarmclock",
+      "episode": "episode12",
+      "instruction": "Click the alarm clock button.",
+      "video_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/video_test/from_dataset/click_alarmclock/episode12.mp4",
+      "frame_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/frames/click_alarmclock_episode12_1109192356.jpg",
+      "embedding_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/embeddings/mm_embed_click_alarmclock_episode12_1109192356.json",
+      "l2_norm": 0.9984461131030248
+    },
+    {
+      "task": "open_laptop",
+      "episode": "episode0",
+      "instruction": "Open the laptop.",
+      "video_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/video_test/from_dataset/open_laptop/episode0.mp4",
+      "frame_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/frames/open_laptop_episode0_1109192356.jpg",
+      "embedding_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/embeddings/mm_embed_open_laptop_episode0_1109192356.json",
+      "l2_norm": 0.999375234172728
+    },
+    {
+      "task": "open_laptop",
+      "episode": "episode1",
+      "instruction": "Open the laptop.",
+      "video_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/video_test/from_dataset/open_laptop/episode1.mp4",
+      "frame_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/frames/open_laptop_episode1_1109192356.jpg",
+      "embedding_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/embeddings/mm_embed_open_laptop_episode1_1109192356.json",
+      "l2_norm": 1.0018978480234666
+    },
+    {
+      "task": "open_laptop",
+      "episode": "episode10",
+      "instruction": "Open the laptop.",
+      "video_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/video_test/from_dataset/open_laptop/episode10.mp4",
+      "frame_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/frames/open_laptop_episode10_1109192356.jpg",
+      "embedding_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/embeddings/mm_embed_open_laptop_episode10_1109192356.json",
+      "l2_norm": 1.0021412119593338
+    },
+    {
+      "task": "open_laptop",
+      "episode": "episode11",
+      "instruction": "Open the laptop.",
+      "video_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/video_test/from_dataset/open_laptop/episode11.mp4",
+      "frame_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/frames/open_laptop_episode11_1109192356.jpg",
+      "embedding_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/embeddings/mm_embed_open_laptop_episode11_1109192356.json",
+      "l2_norm": 1.0015748397647297
+    },
+    {
+      "task": "open_laptop",
+      "episode": "episode12",
+      "instruction": "Open the laptop.",
+      "video_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/video_test/from_dataset/open_laptop/episode12.mp4",
+      "frame_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/frames/open_laptop_episode12_1109192356.jpg",
+      "embedding_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/embeddings/mm_embed_open_laptop_episode12_1109192356.json",
+      "l2_norm": 0.9996135154263387
+    },
+    {
+      "task": "place_container_plate",
+      "episode": "episode0",
+      "instruction": "Place the container onto the plate.",
+      "video_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/video_test/from_dataset/place_container_plate/episode0.mp4",
+      "frame_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/frames/place_container_plate_episode0_1109192356.jpg",
+      "embedding_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/embeddings/mm_embed_place_container_plate_episode0_1109192356.json",
+      "l2_norm": 0.9976990775206241
+    },
+    {
+      "task": "place_container_plate",
+      "episode": "episode1",
+      "instruction": "Place the container onto the plate.",
+      "video_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/video_test/from_dataset/place_container_plate/episode1.mp4",
+      "frame_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/frames/place_container_plate_episode1_1109192356.jpg",
+      "embedding_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/embeddings/mm_embed_place_container_plate_episode1_1109192356.json",
+      "l2_norm": 1.0014890799186824
+    },
+    {
+      "task": "place_container_plate",
+      "episode": "episode10",
+      "instruction": "Place the container onto the plate.",
+      "video_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/video_test/from_dataset/place_container_plate/episode10.mp4",
+      "frame_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/frames/place_container_plate_episode10_1109192356.jpg",
+      "embedding_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/embeddings/mm_embed_place_container_plate_episode10_1109192356.json",
+      "l2_norm": 1.0000430797088127
+    },
+    {
+      "task": "place_container_plate",
+      "episode": "episode11",
+      "instruction": "Place the container onto the plate.",
+      "video_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/video_test/from_dataset/place_container_plate/episode11.mp4",
+      "frame_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/frames/place_container_plate_episode11_1109192356.jpg",
+      "embedding_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/embeddings/mm_embed_place_container_plate_episode11_1109192356.json",
+      "l2_norm": 1.0019051101267353
+    },
+    {
+      "task": "place_container_plate",
+      "episode": "episode12",
+      "instruction": "Place the container onto the plate.",
+      "video_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/video_test/from_dataset/place_container_plate/episode12.mp4",
+      "frame_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/frames/place_container_plate_episode12_1109192356.jpg",
+      "embedding_path": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/embeddings/mm_embed_place_container_plate_episode12_1109192356.json",
+      "l2_norm": 1.0002996265136253
+    }
+  ]
+}
