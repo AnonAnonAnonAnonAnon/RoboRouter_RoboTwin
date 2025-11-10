@@ -232,7 +232,9 @@ class RAGRetriever:
     def __init__(
         self,
         vector_db,
-        embedding_generator: MultimodalEmbedding
+        embedding_generator: MultimodalEmbedding,
+        reranker=None,
+        use_reranker: bool = True
     ):
         """
         初始化RAG检索器
@@ -240,9 +242,29 @@ class RAGRetriever:
         Args:
             vector_db: VectorDB实例
             embedding_generator: MultimodalEmbedding实例
+            reranker: 重排器实例（可选，如果为None且use_reranker=True则延迟加载）
+            use_reranker: 是否使用重排器
         """
         self.vector_db = vector_db
         self.embedding_generator = embedding_generator
+        self.reranker = reranker
+        self.use_reranker = use_reranker
+        self._reranker_initialized = False
+    
+    def _init_reranker(self):
+        """
+        延迟初始化重排器（已弃用）
+        
+        注意：重排器应该在主程序中显式初始化并传入。
+        这个方法只是一个保护性检查，确保重排器已经被正确初始化。
+        """
+        if not self._reranker_initialized:
+            if self.reranker is None and self.use_reranker:
+                print("[RAGRetriever] ⚠️ 重排器未初始化！")
+                print("[RAGRetriever] 请在主程序中初始化重排器并传入 RAGRetriever")
+                print("[RAGRetriever] 将禁用重排功能")
+                self.use_reranker = False
+            self._reranker_initialized = True
     
     def insert_text_records(self, records: List[Dict]):
         """
@@ -271,20 +293,40 @@ class RAGRetriever:
         query_text: str,
         query_image_path: Optional[str] = None,
         top_k: int = 3,
-        score_threshold: Optional[float] = None
+        score_threshold: Optional[float] = None,
+        rerank_top_k: Optional[int] = None
     ) -> List[Dict]:
         """
-        多模态检索
+        多模态检索（支持重排）
+        
+        工作流程：
+        1. 第一步：向量检索（召回阶段）
+           - 使用 embedding 生成查询向量（多模态：图片+文本）
+           - 在向量数据库中检索相似的候选结果
+           - 如果启用重排，召回数量会是 top_k * 2，为重排提供更多候选
+        
+        2. 第二步：重排（精排阶段）
+           - 对召回的候选结果进行精确判断
+           - 使用 Qwen3-VL 视觉语言模型同时理解图片和文本
+           - 判断每个候选是否真正适合完成任务
+           - 按重排分数排序，返回最终结果
         
         Args:
             query_text: 查询文本
             query_image_path: 查询图片路径（可选）
-            top_k: 返回top-k结果
+            top_k: 向量检索返回的结果数量
             score_threshold: 相似度阈值
+            rerank_top_k: 重排后返回的结果数量（None表示返回全部重排结果）
         
         Returns:
-            检索结果列表
+            检索结果列表（如果启用重排，则按重排分数排序）
         """
+        # 第一步：向量检索（召回阶段）
+        # 如果启用重排，可以召回更多候选，例如 top_k * 2
+        initial_top_k = top_k * 2 if self.use_reranker else top_k
+        
+        print(f"[RAGRetriever] 第1步：向量检索，召回 top-{initial_top_k} 候选")
+        
         # 生成查询向量
         query_vector = self.embedding_generator.get_embedding(
             query_text,
@@ -294,9 +336,54 @@ class RAGRetriever:
         # 向量检索
         results = self.vector_db.search(
             query_vector=query_vector,
-            top_k=top_k,
+            top_k=initial_top_k,
             score_threshold=score_threshold
         )
+        
+        if not results:
+            return []
+        
+        # 第二步：重排（精排阶段）
+        if self.use_reranker:
+            print(f"[RAGRetriever] 第2步：多模态重排（Qwen3-VL）")
+            # 延迟初始化重排器
+            self._init_reranker()
+            
+            if self.reranker is not None:
+                try:
+                    print(f"[RAGRetriever] 对 {len(results)} 个候选结果进行重排...")
+                    
+                    # 检查重排器是否支持多模态（是否有 query_image_path 参数）
+                    import inspect
+                    rerank_signature = inspect.signature(self.reranker.rerank)
+                    supports_multimodal = 'query_image_path' in rerank_signature.parameters
+                    
+                    # 执行重排
+                    if supports_multimodal:
+                        # 多模态重排器（如 Qwen3-VL）
+                        results = self.reranker.rerank(
+                            query_text=query_text,
+                            results=results,
+                            query_image_path=query_image_path,
+                            top_k=rerank_top_k or top_k  # 使用指定的重排top_k或默认top_k
+                        )
+                    else:
+                        # 传统文本重排器
+                        results = self.reranker.rerank(
+                            query=query_text,
+                            results=results,
+                            top_k=rerank_top_k or top_k
+                        )
+                    
+                    print(f"[RAGRetriever] 重排完成，返回 top-{len(results)} 结果")
+                except Exception as e:
+                    print(f"[Warning] 重排失败: {e}")
+                    print("[Warning] 返回原始检索结果")
+                    # 如果重排失败，截取原始结果的 top_k
+                    results = results[:top_k]
+            else:
+                # 重排器未初始化，截取 top_k
+                results = results[:top_k]
         
         return results
     
@@ -314,13 +401,19 @@ class RAGRetriever:
         
         formatted_results = []
         for r in results:
-            formatted_results.append({
+            result_dict = {
                 "task": r.get("task", ""),
                 "ckpt": r.get("ckpt", ""),
                 "success_rate": r.get("success_rate", 0.0),
                 "notes": r.get("notes", ""),
                 "similarity_score": round(r["score"], 4)
-            })
+            }
+            
+            # 如果有重排分数，也加入结果
+            if "rerank_score" in r:
+                result_dict["rerank_score"] = round(r["rerank_score"], 4)
+            
+            formatted_results.append(result_dict)
         
         return json.dumps(formatted_results, ensure_ascii=False, indent=2)
 
