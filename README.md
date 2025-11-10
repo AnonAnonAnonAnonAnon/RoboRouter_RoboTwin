@@ -4,7 +4,7 @@
 
 ## TODO
 
-- [ ] **(1) Run as many methods in RoboTwin as possible** (prioritize ones that are easier to run)
+- [✅] **(1) Run as many methods in RoboTwin as possible** (prioritize ones that are easier to run) (Mostly completed)
   - Obtain some **checkpoints** with a certain success rate (Find or train)
   - RoboTwin docs (9 methods, excluding **DexVLA** for now):  
     https://robotwin-platform.github.io/doc/usage/deploy-your-policy.html
@@ -15,8 +15,11 @@
   - **Related Work (kept updated):**  
     https://mcneznd3g628.feishu.cn/wiki/YZwTwwZZPi5Oiek18aocHVLQnTf
 
-- [ ] **(2) Implement the minimal runnable method router** according to the system design (TBD)
+- [✅] **(2) Implement the minimal runnable method router** according to the system design (Mostly completed)
   - The minimal agent call demo has now been implemented, including a retriever and a router, in agents/ma_router_retriever_min_gpt_demo.py
+     
+- [ ] **(3) t-SNE plotting (The main part is completed)
+
 - [ ] others……
 
 ---
@@ -54,6 +57,7 @@
 ## Notes
 
 - Feel free to write ideas or progress about implement directly here. This page also serves as a memo & message board.  
+
 
 
 
