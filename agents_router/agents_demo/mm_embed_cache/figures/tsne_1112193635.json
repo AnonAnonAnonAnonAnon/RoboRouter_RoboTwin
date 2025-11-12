@@ -1,0 +1,46 @@
+{
+  "timestamp": "1112193635",
+  "inputs_dir": "/data/work/OliverRen/open_s_proj/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/embeddings",
+  "output_files": [
+    "/data/work/OliverRen/open_s_proj/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/figures/tsne_1112193635_v1_with_labels.png",
+    "/data/work/OliverRen/open_s_proj/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/figures/tsne_1112193635_v2_no_labels.png",
+    "/data/work/OliverRen/open_s_proj/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/figures/tsne_1112193635_v3_highlight.png",
+    "/data/work/OliverRen/open_s_proj/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/figures/tsne_1112193635.csv"
+  ],
+  "N": 400,
+  "D": 1536,
+  "num_tasks": 20,
+  "task_counts": {
+    "adjust_bottle": 20,
+    "beat_block_hammer": 20,
+    "click_alarmclock": 20,
+    "click_bell": 20,
+    "dump_bin_bigbin": 20,
+    "grab_roller": 20,
+    "handover_mic": 20,
+    "lift_pot": 20,
+    "move_can_pot": 20,
+    "move_playingcard_away": 20,
+    "open_laptop": 20,
+    "pick_dual_bottles": 20,
+    "place_burger_fries": 20,
+    "place_container_plate": 20,
+    "place_empty_cup": 20,
+    "put_bottles_dustbin": 20,
+    "put_object_cabinet": 20,
+    "shake_bottle": 20,
+    "stack_bowls_three": 20,
+    "stack_bowls_two": 20
+  },
+  "use_pca": true,
+  "pca_dim": 50,
+  "tsne": {
+    "perplexity": 60,
+    "n_iter": 2000,
+    "learning_rate": 200.0,
+    "early_exaggeration": 6.0,
+    "random_state": 42,
+    "metric": "euclidean+L2norm"
+  },
+  "highlight_tasks": []
+}

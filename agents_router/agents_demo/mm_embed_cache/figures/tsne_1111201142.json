@@ -1,0 +1,32 @@
+{
+  "timestamp": "1111201142",
+  "inputs_dir": "/data/work/OliverRen/open_s_proj/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/embeddings",
+  "output_files": [
+    "/data/work/OliverRen/open_s_proj/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/figures/tsne_1111201142_v3_highlight.png",
+    "/data/work/OliverRen/open_s_proj/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache/figures/tsne_1111201142.csv"
+  ],
+  "N": 100,
+  "D": 1536,
+  "num_tasks": 5,
+  "task_counts": {
+    "adjust_bottle": 20,
+    "beat_block_hammer": 20,
+    "click_alarmclock": 20,
+    "open_laptop": 20,
+    "place_container_plate": 20
+  },
+  "use_pca": true,
+  "pca_dim": 50,
+  "tsne": {
+    "perplexity": 15,
+    "n_iter": 1000,
+    "learning_rate": 200.0,
+    "early_exaggeration": 12.0,
+    "random_state": 42,
+    "metric": "euclidean+L2norm"
+  },
+  "highlight_tasks": [
+    "adjust_bottle",
+    "open_laptop"
+  ]
+}
