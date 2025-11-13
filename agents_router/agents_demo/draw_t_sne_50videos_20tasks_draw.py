@@ -28,10 +28,10 @@ TSNE_EARLY_EXAG   = 1.0   # 早期放大倍数：减小让图更紧凑（6 -> 4�
 RANDOM_STATE      = 42    # 固定随机种子（保证可复现）
 
 # ===== 散点大小配置 =====
-POINT_SIZE_V1 = 100  # 版本1的点大小：大3倍（50 -> 150）
-POINT_SIZE_V2 = 100  # 版本2的点大小：大3倍（50 -> 150）
-POINT_SIZE_V3_BG = 60  # 版本3背景灰点大小：大3倍（30 -> 90）
-POINT_SIZE_V3_HL = 160  # 版本3高亮红点大小：大3倍（80 -> 240）
+POINT_SIZE_V1 = 10  # 版本1的点大小：大3倍（50 -> 150）
+POINT_SIZE_V2 = 10  # 版本2的点大小：大3倍（50 -> 150）
+POINT_SIZE_V3_BG = 10  # 版本3背景灰点大小：大3倍（30 -> 90）
+POINT_SIZE_V3_HL = 10  # 版本3高亮红点大小：大3倍（80 -> 240）
 
 # ===== 图像尺寸配置 =====
 FIGSIZE        = (10, 10)  # 图尺寸 (宽, 高) 英寸
@@ -121,29 +121,28 @@ def plot_version1(X2, tasks, output_prefix):
     for task in unique_tasks:
         idx = np.array(tasks) == task
         ax.scatter(X2[idx, 0], X2[idx, 1], c=[color_map[task]], s=POINT_SIZE_V1,
-                  label=task, alpha=0.7, edgecolors='white', linewidths=0.5)
+                   label=task, alpha=0.7, edgecolors='white', linewidths=0.5)
     
     for task in unique_tasks:
         idx = np.array(tasks) == task
         center_x = np.mean(X2[idx, 0])
         center_y = np.mean(X2[idx, 1])
         ax.text(center_x, center_y, task, fontsize=9, ha='center', va='center',
-               bbox=dict(boxstyle='round,pad=0.3', facecolor='white', alpha=0.7, edgecolor='gray'))
+                bbox=dict(boxstyle='round,pad=0.3', facecolor='white', alpha=0.7, edgecolor='gray'))
     
     ax.set_xlabel("t-SNE dim 1", fontsize=12)
     ax.set_ylabel("t-SNE dim 2", fontsize=12)
     ax.set_title(f"t-SNE Visualization - Version 1 (N={len(tasks)} samples, {len(unique_tasks)} tasks)", 
-                fontsize=14, fontweight='bold')
+                 fontsize=14, fontweight='bold')
     
     ax.legend(loc='center left', bbox_to_anchor=(1, 0.5), fontsize=10, 
-             framealpha=0.9, title="Tasks")
+              framealpha=0.9, title="Tasks")
     
-        # 保证绘图区为正方形
+    # 保证绘图区为正方形
     try:
         ax.set_box_aspect(1)  # Matplotlib >= 3.3
     except AttributeError:
         ax.set_aspect('equal', adjustable='box')
-
 
     fig.tight_layout()
     fig_path = f"{output_prefix}_v1_with_labels.png"
@@ -151,6 +150,7 @@ def plot_version1(X2, tasks, output_prefix):
     plt.close(fig)
     print(f"[✓] 版本1保存: {fig_path}")
     return fig_path
+
 
 def plot_version2(X2, tasks, output_prefix):
     """版本2：彩色散点，无任务名称"""
@@ -162,22 +162,21 @@ def plot_version2(X2, tasks, output_prefix):
     for task in unique_tasks:
         idx = np.array(tasks) == task
         ax.scatter(X2[idx, 0], X2[idx, 1], c=[color_map[task]], s=POINT_SIZE_V2,
-                  label=task, alpha=0.7, edgecolors='white', linewidths=0.5)
+                   label=task, alpha=0.7, edgecolors='white', linewidths=0.5)
     
     ax.set_xlabel("t-SNE dim 1", fontsize=12)
     ax.set_ylabel("t-SNE dim 2", fontsize=12)
     ax.set_title(f"t-SNE Visualization - Version 2 (N={len(tasks)} samples, {len(unique_tasks)} tasks)", 
-                fontsize=14, fontweight='bold')
+                 fontsize=14, fontweight='bold')
     
     ax.legend(loc='center left', bbox_to_anchor=(1, 0.5), fontsize=10, 
-             framealpha=0.9, title="Tasks")
+              framealpha=0.9, title="Tasks")
     
-        # 保证绘图区为正方形
+    # 保证绘图区为正方形
     try:
         ax.set_box_aspect(1)  # Matplotlib >= 3.3
     except AttributeError:
         ax.set_aspect('equal', adjustable='box')
-
 
     fig.tight_layout()
     fig_path = f"{output_prefix}_v2_no_labels.png"
@@ -186,40 +185,113 @@ def plot_version2(X2, tasks, output_prefix):
     print(f"[✓] 版本2保存: {fig_path}")
     return fig_path
 
+
 def plot_version3(X2, tasks, highlight_tasks, output_prefix):
-    """版本3：灰色背景 + 红色高亮指定任务"""
+    """版本3：灰色背景 + 红色高亮指定任务（支持比例与前/后）+ 右侧任务 legend"""
     fig, ax = plt.subplots(figsize=FIGSIZE, dpi=DPI)
-    
+
     tasks_array = np.array(tasks)
+    # 用和 v1/v2 相同的颜色方案来生成 legend
+    color_map, unique_tasks = _get_colors(tasks)
     
-    ax.scatter(X2[:, 0], X2[:, 1], c='lightgray', s=POINT_SIZE_V3_BG, alpha=0.5, 
-              edgecolors='gray', linewidths=0.3, label='Other tasks')
-    
+    # 背景灰点：所有样本
+    ax.scatter(
+        X2[:, 0], X2[:, 1],
+        c='lightgray', s=POINT_SIZE_V3_BG, alpha=0.5,
+        edgecolors='gray', linewidths=0.3
+    )
+
+    # 解析 highlight 规格： task[:ratio][:head|tail|all]
+    highlight_desc = []
     if highlight_tasks:
-        for task in highlight_tasks:
-            idx = tasks_array == task
-            if np.any(idx):
-                ax.scatter(X2[idx, 0], X2[idx, 1], c='red', s=POINT_SIZE_V3_HL, alpha=0.8,
-                          edgecolors='darkred', linewidths=0.8, label=task)
-    
+        for spec in highlight_tasks:
+            parts = spec.split(':')
+            task_name = parts[0].strip()
+            if not task_name:
+                continue
+
+            # 默认：全部样本
+            ratio = 1.0
+            mode = 'all'
+
+            # ratio
+            if len(parts) >= 2 and parts[1].strip() != '':
+                try:
+                    ratio = float(parts[1])
+                except ValueError:
+                    ratio = 1.0
+            ratio = max(0.0, min(1.0, ratio))  # clamp 到 [0,1]
+
+            # mode
+            if len(parts) >= 3 and parts[2].strip() != '':
+                m = parts[2].strip().lower()
+                if m in ('head', 'tail', 'all'):
+                    mode = m
+
+            # 找到这个 task 对应的所有索引（按原顺序）
+            idx_all = np.where(tasks_array == task_name)[0]
+            if idx_all.size == 0:
+                continue
+
+            if mode == 'all' or ratio == 1.0:
+                idx = idx_all
+            else:
+                k = max(1, int(round(idx_all.size * ratio)))
+                if mode == 'head':
+                    idx = idx_all[:k]
+                elif mode == 'tail':
+                    idx = idx_all[-k:]
+                else:
+                    idx = idx_all
+
+            # 画红色高亮
+            ax.scatter(
+                X2[idx, 0], X2[idx, 1],
+                c='red', s=POINT_SIZE_V3_HL, alpha=0.8,
+                edgecolors='darkred', linewidths=0.8
+            )
+
+            # 收集描述，用于 title
+            if mode == 'all' or ratio == 1.0:
+                highlight_desc.append(task_name)
+            else:
+                highlight_desc.append(f"{task_name} ({ratio*100:.0f}% {mode})")
+
     ax.set_xlabel("t-SNE dim 1", fontsize=12)
     ax.set_ylabel("t-SNE dim 2", fontsize=12)
     
     title = f"t-SNE Visualization - Version 3 (N={len(tasks)} samples)"
-    if highlight_tasks:
-        title += f"\nHighlighted: {', '.join(highlight_tasks)}"
+    if highlight_desc:
+        title += "\nHighlighted: " + ", ".join(highlight_desc)
     ax.set_title(title, fontsize=14, fontweight='bold')
     
-        # 保证绘图区为正方形
+    # 保证绘图区为正方形
     try:
         ax.set_box_aspect(1)  # Matplotlib >= 3.3
     except AttributeError:
         ax.set_aspect('equal', adjustable='box')
-
-
-    if highlight_tasks:
-        ax.legend(loc='center left', bbox_to_anchor=(1, 0.5), fontsize=10, 
-                 framealpha=0.9, title="Highlighted Tasks")
+    
+    # 和 v1/v2 一致的 legend：按任务列出
+    handles = []
+    for task in unique_tasks:
+        handles.append(
+            Line2D(
+                [0], [0],
+                marker='o',
+                linestyle='',
+                markerfacecolor=color_map[task],
+                markeredgecolor='white',
+                markeredgewidth=0.5,
+                markersize=8,
+                label=task,
+            )
+        )
+    
+    ax.legend(
+        handles=handles,
+        loc='center left', bbox_to_anchor=(1, 0.5),
+        fontsize=10, framealpha=0.9, title="Tasks"
+    )
     
     fig.tight_layout()
     fig_path = f"{output_prefix}_v3_highlight.png"
@@ -227,6 +299,7 @@ def plot_version3(X2, tasks, highlight_tasks, output_prefix):
     plt.close(fig)
     print(f"[✓] 版本3保存: {fig_path}")
     return fig_path
+
 
 def main():
     parser = argparse.ArgumentParser(description='t-SNE可视化 - 3个版本')

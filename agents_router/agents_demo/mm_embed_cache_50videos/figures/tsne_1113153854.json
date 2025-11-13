@@ -1,0 +1,47 @@
+{
+  "timestamp": "1113153854",
+  "inputs_dir": "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache_50videos/embeddings",
+  "output_files": [
+    "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache_50videos/figures/tsne_1113153854_v3_highlight.png",
+    "/home/cyt/RoboRouter/RoboRouter_RoboTwin/agents_router/agents_demo/mm_embed_cache_50videos/figures/tsne_1113153854.csv"
+  ],
+  "N": 1000,
+  "D": 1536,
+  "num_tasks": 20,
+  "task_counts": {
+    "adjust_bottle": 50,
+    "beat_block_hammer": 50,
+    "click_alarmclock": 50,
+    "click_bell": 50,
+    "dump_bin_bigbin": 50,
+    "grab_roller": 50,
+    "handover_mic": 50,
+    "lift_pot": 50,
+    "move_can_pot": 50,
+    "move_playingcard_away": 50,
+    "open_laptop": 50,
+    "pick_dual_bottles": 50,
+    "place_burger_fries": 50,
+    "place_container_plate": 50,
+    "place_empty_cup": 50,
+    "put_bottles_dustbin": 50,
+    "put_object_cabinet": 50,
+    "shake_bottle": 50,
+    "stack_bowls_three": 50,
+    "stack_bowls_two": 50
+  },
+  "use_pca": true,
+  "pca_dim": 50,
+  "tsne": {
+    "perplexity": 300,
+    "n_iter": 2000,
+    "learning_rate": 200.0,
+    "early_exaggeration": 1.0,
+    "random_state": 42,
+    "metric": "euclidean+L2norm"
+  },
+  "highlight_tasks": [
+    "adjust_bottle:0.7:head",
+    "shake_bottle:0.3:tail"
+  ]
+}
